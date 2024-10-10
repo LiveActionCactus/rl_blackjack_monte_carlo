@@ -58,19 +58,30 @@ class Blackjack:
 				self.check_player_ace(hand)
 				self.update_score(hand)
 
+
 	def determine_winner(self):
-		possible_winners = [(player, score) for player, score in self.scores.items() if score <= 21]
+		possible_winners = [player for player, score in self.scores.items() if score <= 21]
+		ties = []
+		high_score = 0
 
 		if not possible_winners:
-			print("No winner!")
+			pass
+			# print("No winner!") 									# print no winner -- TODO: verbose mode
 		else:
-			winner = max(possible_winners, key=lambda item: item[1])
+			for player in possible_winners:
+				if self.scores[player] > high_score:
+					ties = [player]
+					high_score = self.scores[player]
+				elif self.scores[player] == high_score:
+					ties.append(player)
 
-			if len(winner) > 2:
-				print("Tie!")
+			if len(ties) == 1:
+				self.win_count[ties[0]] += 1
 			else:
-				print(winner[0] + " wins!")
-				self.win_count[winner[0]] += 1
+				for player in ties:
+					self.win_count[player] += 0.5
+
+			# print(', '.join(ties).upper() + " won!") 				# print winner of game -- TODO: verbose mode
 
 
 	def update_score(self, hand):
@@ -122,7 +133,7 @@ class Blackjack:
 
 test = Blackjack()
 # test.start_game()
-test.multi_start_game(25)
+test.multi_start_game(1000)
 # print(test.hands)
 # print(test.scores)
 # test.hit()
