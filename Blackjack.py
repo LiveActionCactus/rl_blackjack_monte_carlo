@@ -29,19 +29,19 @@ class Blackjack:
 
 
 	def reset_game(self):
-		hands = {
+		self.hands = {
 			"dealer" : [],
 			"player" : []
 		}
-		scores = {
+		self.scores = {
 			"dealer" : 0,
 			"player" : 0
 		}
-		has_ace = {
+		self.has_ace = {
 			"dealer" : False,
 			"player" : False
 		}
-		has_useable_ace = {
+		self.has_useable_ace = {
 			"dealer" : False,
 			"player" : False
 		}
@@ -64,8 +64,6 @@ class Blackjack:
 		for i in range(0, starts):
 			self.start_game(verbose=False)
 			self.reset_game()
-			# print(self.hands)
-			# print(self.scores)
 
 		print(self.win_count)
 
@@ -150,7 +148,7 @@ class Blackjack:
 				
 				break
 
-			elif new_best_score <= 21:
+			elif (new_best_score <= 21):
 				self.has_useable_ace[hand] = True
 				best_score = new_best_score
 
@@ -165,3 +163,4 @@ class Blackjack:
 
 	def stick(self):
 		print(hand + " sticks with score " + self.score[hand])
+
